@@ -1,10 +1,11 @@
 import { useState } from "react";
+import { listOfTasks, Task } from "../../types";
 
-const TaskList = (props) => {
+const TaskList = (props: listOfTasks) => {
   //use Effect for the rescue ?? No!
   return (
     <div>
-      {props.listOfTasks.map((task) => {
+      {props.listOfTasks.map((task: Task) => {
         return (
           <li key={task.id}>
             <label>
