@@ -1,20 +1,18 @@
-import { Task } from "./types";
+import { ITask } from "./types";
 
-const inputValidation = (inputValue: string, tasks: Task[]): boolean => {
-  let valid = true;
+const inputValidation = (inputValue: string, tasks: ITask[]): boolean => {
   if (inputValue === "") {
     alert("Please insert some task");
-    valid = false;
+    return false;
   }
 
-  tasks.forEach((task: Task) => {
-    if (task.discreption == inputValue) {
+  tasks.forEach((task: ITask) => {
+    if (task.discreption === inputValue) {
       alert("You already added that task.");
-      valid = false;
-      return;
+      return false;
     }
   });
-  return valid;
+  return true;
 };
 
 export default inputValidation;

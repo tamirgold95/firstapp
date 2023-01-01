@@ -2,13 +2,14 @@ import "./App.css";
 import { useState } from "react";
 import Input from "./components/Input/Input";
 import TaskList from "./components/TaskList/TaskList";
-import { Task } from "./types";
+import { ITask } from "./types";
 import inputValidation from "./validation";
 
 function App() {
   const [userName, setUserName] = useState("Tamir");
   const [inputValue, setInputValue] = useState("");
-  const [tasks, setTasks] = useState([] as Task[]);
+  const [tasks, setTasks] = useState([] as ITask[]);
+  const [editing, setEditing] = useState(false);
 
   const onInputChange = (value: string) => {
     setInputValue(value);
@@ -28,23 +29,31 @@ function App() {
   const onClickRemove = (taskId: number | undefined) => {
     //console.log(tasks);
     //console.log(checkedTask);
-    setTasks(tasks.filter((t: Task) => t.id !== taskId));
+    setTasks(tasks.filter((t: ITask) => t.id !== taskId));
   };
 
-  //const onClickEdit = (taskId : number) => {};
+  const onClickEdit = (task: ITask) =>
+    setTasks(
+      tasks.map((t) => {
+        if (t.id === task.id) {
+          return task;
+        } else {
+          return t;
+        }
+      })
+    );
 
   return (
     <div className="App">
       <h1>{userName}'s To Do List</h1>
       <Input onInputChange={onInputChange} value={inputValue} />
       <button onClick={onAddTaskClick}>Add Task</button>
-      <ul>
-        <TaskList
-          listOfTasks={tasks}
-          onClickDelete={onClickRemove}
-          // onClickEdit={onClickEdit}
-        />
-      </ul>
+
+      <TaskList
+        listOfTasks={tasks}
+        onClickDelete={onClickRemove}
+        onClickEdit={onClickEdit}
+      />
       <label>{tasks.length} tasks left</label>
     </div>
   );
